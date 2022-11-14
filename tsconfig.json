@@ -27,6 +27,15 @@
     "paths": {
       "@/components/*": [
         "app/components/*"
+      ],
+      "@/services/*": [
+        "services/*"
+      ],
+      "@/hooks/*": [
+        "hooks/*"
+      ],
+      "@/types/*": [
+        "types/*"
       ]
     }
   },
