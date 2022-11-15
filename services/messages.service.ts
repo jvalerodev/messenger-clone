@@ -5,8 +5,8 @@ import { Message } from '@/types/typings';
 const MessagesService = {
   uploadMessageToUptash: async (message: Message): Promise<Message> => {
     try {
-      const res = await axios.post('/api/messages', { message });
-      const messageSent: Message = res.data;
+      const { data } = await axios.post('/api/messages', { message });
+      const messageSent: Message = data.message;
       return messageSent;
     } catch (error) {
       throw (error);

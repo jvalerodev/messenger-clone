@@ -6,7 +6,7 @@ const ChatInput = () => {
   const { input, setInput, handleSubmit } = useMessages();
 
   return (
-    <form onSubmit={handleSubmit} className="fixed bottom-0 z-50 w-full flex px-10 py-5 space-x-2 border-t border-gray-100">
+    <form onSubmit={handleSubmit} className="fixed bottom-0 z-50 w-full flex px-10 py-5 space-x-2 border-t border-gray-100 bg-white">
       <input
         type="text"
         placeholder="Enter a message here..."
@@ -21,8 +21,8 @@ const ChatInput = () => {
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed transition duration-200"
       >
         Send
-      </button>
-    </form>
+      </button >
+    </form >
   );
 };
 

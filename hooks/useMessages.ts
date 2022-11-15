@@ -4,6 +4,7 @@ import useSWR from 'swr';
 
 import { Message } from '@/types/typings';
 import { MessagesService } from '@/services/index';
+import { clientPusher } from '@/services/config/pusher';
 
 const useMessages = () => {
   const [input, setInput] = useState('');
@@ -27,13 +28,13 @@ const useMessages = () => {
 
     const sendMessage = async () => {
       const messageData = await MessagesService.uploadMessageToUptash(message);
-      return [messageData, ...messages!];
-    }
+      return [...messages!, messageData];
+    };
 
     setInput('');
 
     await mutate(sendMessage, {
-      optimisticData: [message, ...messages!],
+      optimisticData: [...messages!, message],
       rollbackOnError: true
     });
   };
@@ -42,9 +43,34 @@ const useMessages = () => {
     return await MessagesService.getMessages();
   };
 
+  const updateMessages = () => {
+    const channel = clientPusher.subscribe('messages');
+
+    channel.bind('new-message', (data: Message) => {
+      // If you sent the message, no need update cache
+      if (messages?.find(message => message.id === data.id))
+        return;
+
+      if (messages) {
+        mutate(getMessages, {
+          optimisticData: [...messages!, data],
+          rollbackOnError: true
+        });
+      }
+      else {
+        mutate(getMessages);
+      }
+    });
+
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    };
+  };
+
   const { data: messages, error, mutate } = useSWR('/api/messages', getMessages);
 
-  return { input, setInput, handleSubmit, getMessages };
+  return { input, setInput, handleSubmit, getMessages, updateMessages };
 };
 
 export default useMessages;

@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import redis from '@/services/config/redis';
 
 import { Message } from '@/types/typings';
+import redis from '@/services/config/redis';
+import { serverPusher } from '@/services/config/pusher';
 
 type GETData = {
   messages: Message[]
@@ -23,11 +24,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<GETData | POSTD
       try {
         const messagesgRes = await redis.hvals('messages');
         const messages: Message[] = messagesgRes.map(message => JSON.parse(message));
-        messages.sort((a, b) => b.created_at - a.created_at);
+        messages.sort((a, b) => a.created_at - b.created_at);
 
-
-        res.status(200).json({ messages });
-        return;
+        return res.status(200).json({ messages });
       } catch (error) {
         console.log(error);
       }
@@ -40,6 +39,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<GETData | POSTD
 
       try {
         await redis.hset('messages', message.id, JSON.stringify(message));
+        serverPusher.trigger('messages', 'new-message', message);
+
         return res.status(200).json({ message });
       } catch (error) {
         console.log(error);
