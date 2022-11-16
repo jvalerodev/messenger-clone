@@ -1,16 +1,23 @@
+import { unstable_getServerSession } from 'next-auth/next';
+
 import MessageList from '@/components/MessageList';
 import ChatInput from '@/components/ChatInput';
 import { getMessages } from '@/utils/fetchData';
 
+import Providers from './providers';
+
 const Home = async () => {
   const messages = await getMessages();
+  const session = await unstable_getServerSession();
 
   return (
-    <main>
-      <MessageList initialMessages={messages} />
+    <Providers session={session}>
+      <main>
+        <MessageList initialMessages={messages} />
 
-      <ChatInput />
-    </main>
+        <ChatInput session={session} />
+      </main>
+    </Providers>
   )
 };
 
