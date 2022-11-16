@@ -5,6 +5,6 @@ module.exports = {
     appDir: true
   },
   images: {
-    domains: ['links.papareact.com', 'scontent.fmrd1-1.fna.fbcdn.net']
+    domains: ['links.papareact.com', 'scontent.fmrd1-1.fna.fbcdn.net', 'platform-lookaside.fbsbx.com']
   }
 }
