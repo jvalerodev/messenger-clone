@@ -12,7 +12,7 @@ const ChatInput = ({ session }: Props) => {
   const { input, setInput, handleSubmit } = useMessages();
 
   return (
-    <form onSubmit={handleSubmit} className="sticky bottom-0 z-50 flex p-5 space-x-2 border-t border-gray-200 bg-white">
+    <form onSubmit={e => handleSubmit(e, session)} className="sticky bottom-0 z-50 flex p-5 space-x-2 border-t border-gray-200 bg-white">
       <input
         type="text"
         placeholder="Enter a message here..."

@@ -1,18 +1,21 @@
 import { useState, FormEvent } from 'react';
 import { v4 as uuid } from 'uuid';
 import useSWR from 'swr';
+import { unstable_getServerSession } from 'next-auth/next';
 
 import { Message } from '@/types/typings';
 import { MessagesService } from '@/services/index';
 import { clientPusher } from '@/services/config/pusher';
 
+type Session = Awaited<ReturnType<typeof unstable_getServerSession>>;
+
 const useMessages = () => {
   const [input, setInput] = useState('');
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>, session: Session) => {
     e.preventDefault();
 
-    if (!input) return;
+    if (!input || !session) return;
 
     const messageToSend = input;
     const id = uuid();
@@ -21,9 +24,9 @@ const useMessages = () => {
       id,
       message: messageToSend,
       created_at: Date.now(),
-      username: 'Jesus Valero',
-      profilePic: 'https://scontent.fmrd1-1.fna.fbcdn.net/v/t31.18172-1/21743434_497428813953717_2174851471748211531_o.jpg?stp=dst-jpg_p200x200&_nc_cat=103&ccb=1-7&_nc_sid=7206a8&_nc_ohc=HkIu5uyOTpkAX-Tr2zz&_nc_ht=scontent.fmrd1-1.fna&oh=00_AfC6V1IY2w0qo_zcLjvkVniSnl3Uyllt5vWoVMrH9azlhg&oe=6397D150',
-      email: 'yisusvalerog.175@gmail.com'
+      username: session?.user?.name!,
+      profilePic: session?.user?.image!,
+      email: session?.user?.email!
     };
 
     const sendMessage = async () => {

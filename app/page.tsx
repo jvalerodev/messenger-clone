@@ -7,8 +7,11 @@ import { getMessages } from '@/utils/fetchData';
 import Providers from './providers';
 
 const Home = async () => {
-  const messages = await getMessages();
   const session = await unstable_getServerSession();
+
+  // if (!session) return null;
+
+  const messages = await getMessages();
 
   return (
     <Providers session={session}>
@@ -18,7 +21,7 @@ const Home = async () => {
         <ChatInput session={session} />
       </main>
     </Providers>
-  )
+  );
 };
 
 export default Home;
