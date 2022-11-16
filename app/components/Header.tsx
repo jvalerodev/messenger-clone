@@ -39,10 +39,10 @@ const Header = ({ session }: Props) => {
         <div className="flex flex-col items-center space-y-5">
           <div className="flex space-x-2 items-center">
             <Image
-              src="https://links.papareact.com/jne"
+              src="/meta.png"
               alt="Logo"
-              height={10}
-              width={50}
+              height={20}
+              width={70}
             />
 
             <p className="text-blue-400">Welcome to Meta Messenger</p>
