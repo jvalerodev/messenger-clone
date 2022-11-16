@@ -20,7 +20,7 @@ const MessageList = ({ initialMessages }: Props) => {
   }, [messages, mutate, clientPusher]);
 
   return (
-    <div className="space-y-5 px-5 pt-8 pb-32 max-w-2xl xl:max-w-4xl mx-auto">
+    <div className="space-y-5 pt-8 pb-10 mx-auto bg-white px-5 overflow-y-scroll max-h-screen scrollbar-hide">
       {(messages || initialMessages).map(message => (
         <MessageComponent key={message.id} msg={message} />
       ))}

@@ -7,14 +7,14 @@ const Header = () => {
 
   if (session) {
     return (
-      <header className="sticky top-0 z-50 bg-white flex justify-between items-center p-10 shadow-sm">
+      <header className="sticky top-0 z-50 bg-white flex justify-between items-center py-10 shadow-sm px-5">
         <div className="flex space-x-2">
           <Image
             src="https://links.papareact.com/jne"
             alt="Profile picture"
             height={10}
             width={50}
-            className="rounded-full mx-2 object-contain w-auto"
+            className="rounded-full object-contain w-auto"
             priority
           />
 
@@ -30,7 +30,7 @@ const Header = () => {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-white flex justify-center items-center p-10 shadow-sm">
+    <header className="sticky top-0 z-50 bg-white flex justify-center items-center py-10 shadow-sm">
       <div className="flex flex-col items-center space-y-5">
         <div className="flex space-x-2 items-center">
           <Image

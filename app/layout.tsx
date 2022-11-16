@@ -10,9 +10,11 @@ const RootLayout = ({
     <html>
       <head />
 
-      <body>
-        <Header />
-        {children}
+      <body className="bg-gray-100 overflow-y-hidden">
+        <div className="max-w-2xl xl:max-w-4xl mx-auto">
+          <Header />
+          {children}
+        </div>
       </body>
     </html>
   );
