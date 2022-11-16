@@ -9,7 +9,7 @@ import Providers from './providers';
 const Home = async () => {
   const session = await unstable_getServerSession();
 
-  // if (!session) return null;
+  if (!session) return null;
 
   const messages = await getMessages();
 
